@@ -62,8 +62,8 @@ describe GrokNGelf::Importers::DynflowTasks do
   }
 
   it "imports successfull execution plan start" do
-    notifier.expects(:notify).at_least(1)
-    notifier.expects(:notify).with(log_event_matcher(expected_ep_log, 1))
+    notifier.expects(:export).at_least(1)
+    notifier.expects(:export).with(log_event_matcher(expected_ep_log, 1))
     dt_importer.import(fixture_log('dynflow_tasks_success'))
   end
 
@@ -73,14 +73,14 @@ describe GrokNGelf::Importers::DynflowTasks do
       'short_message' => "Execution plan 3926bad1-7b7d-4a49-9e86-e31e4f431483 ended",
       'dynflow_event_type' => 'end',
     })
-    notifier.expects(:notify).at_least(1)
-    notifier.expects(:notify).with(log_event_matcher(expected_log, 2)) # 2nd notify call
+    notifier.expects(:export).at_least(1)
+    notifier.expects(:export).with(log_event_matcher(expected_log, 2)) # 2nd export call
     dt_importer.import(fixture_log('dynflow_tasks_success'))
   end
 
   it "imports successfull step start" do
-    notifier.expects(:notify).at_least(1)
-    notifier.expects(:notify).with(log_event_matcher(expected_step_log, 5)) # 5th notify call, 2nd step
+    notifier.expects(:export).at_least(1)
+    notifier.expects(:export).with(log_event_matcher(expected_step_log, 5)) # 5th export call, 2nd step
     dt_importer.import(fixture_log('dynflow_tasks_success'))
   end
 
@@ -90,8 +90,8 @@ describe GrokNGelf::Importers::DynflowTasks do
       'short_message' => "Execution step ended",
       'dynflow_event_type' => 'end',
     })
-    notifier.expects(:notify).at_least(1)
-    notifier.expects(:notify).with(log_event_matcher(expected_log, 6)) # 6th notify call, 2nd step
+    notifier.expects(:export).at_least(1)
+    notifier.expects(:export).with(log_event_matcher(expected_log, 6)) # 6th export call, 2nd step
     dt_importer.import(fixture_log('dynflow_tasks_success'))
   end
 end

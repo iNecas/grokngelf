@@ -8,7 +8,7 @@ module GrokNGelf
       parameter "LOG_FILE", "file containing the logs", :attribute_name => :log
 
       def execute
-        GrokNGelf::Importers::Syslog.new(notifier, host, import_id).import(self.log)
+        GrokNGelf::Importers::Syslog.new(exporter, host, import_id).import(self.log)
         super
       end
     end

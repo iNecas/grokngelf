@@ -19,7 +19,7 @@ module GrokNGelf
           puts "sosreport was extracted to #{expanded}"
           self.log_dir = expanded
         end
-        GrokNGelf::Importers::SOSReport.new(notifier, host, import_id).import(self.log_dir)
+        GrokNGelf::Importers::SOSReport.new(exporter, host, import_id).import(self.log_dir)
         super
       end
     end

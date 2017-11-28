@@ -1,4 +1,3 @@
-require 'gelf'
 require 'grok-pure'
 
 module GrokNGelf
@@ -6,8 +5,8 @@ module GrokNGelf
     class Abstract
       attr_reader :helpers
 
-      def initialize(notifier, host, import_id)
-        @notifier = notifier
+      def initialize(exporter, host, import_id)
+        @exporter = exporter
         @import_id = import_id.to_s
         @host = host
         @helpers = Helpers.new
@@ -28,13 +27,8 @@ module GrokNGelf
         parser
       end
 
-      def notify(data={})
-        @notifier.notify(GrokNGelf::LogEvent.new({
-          'import_id' => @import_id,
-          'facility' => @host,
-          'importer' => self.class.name,
-          'log_file' => @log,
-        }.merge(data)))
+      def export(data={})
+        @exporter.export(LogEvent.new(import_id: @import_id, host: @host, importer: self.class.name, log_file: @log, data: data))
       end
 
       def update_progress
@@ -64,7 +58,7 @@ module GrokNGelf
         return if unmatched.length == 0
         unmatched.rewind
         unmatched.each_line do |line|
-          notify(
+          export(
             'timestamp' => Time.now.getutc,
             'program' => 'unmatched',
             'original_line' => line,

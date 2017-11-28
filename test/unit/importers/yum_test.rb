@@ -2,8 +2,8 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
 describe GrokNGelf::Importers::Yum do
 
-  let(:notifier) { mock() }
-  let(:yum_importer) { GrokNGelf::Importers::Yum.new(notifier, 'localhost', 1) }
+  let(:exporter) { mock() }
+  let(:yum_importer) { GrokNGelf::Importers::Yum.new(exporter, 'localhost', 1) }
 
   it "parses standard log line" do
     expected_log = {
@@ -12,7 +12,6 @@ describe GrokNGelf::Importers::Yum do
       "timestamp"=>1487070072,
       "level"=>1,
       "level_hr"=>"INFO",
-      "importer"=>"GrokNGelf::Importers::Yum",
       "program"=>"yum",
       "action"=>"Updated",
       "package_nevra"=>"1:openssl-libs-1.0.1e-60.el7.x86_64",
@@ -24,7 +23,7 @@ describe GrokNGelf::Importers::Yum do
       "package_release"=>"60.el7",
       "package_architecture"=>"x86_64"
     }
-    notifier.expects(:notify).with(log_event_matcher(expected_log))
+    exporter.expects(:export).with(log_event_matcher(expected_log))
 
     yum_importer.import(fixture_log('yum_standard.log'))
   end

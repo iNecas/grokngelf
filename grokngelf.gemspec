@@ -26,6 +26,7 @@ EOF
   s.add_dependency 'clamp', '~> 1.0'
   s.add_dependency 'awesome_print'
   s.add_dependency 'gelf'
+  s.add_dependency 'elasticsearch'
   s.add_dependency 'jls-grok'
   s.add_dependency 'sqlite3'
 end

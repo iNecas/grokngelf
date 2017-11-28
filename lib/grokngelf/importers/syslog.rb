@@ -10,7 +10,7 @@ module GrokNGelf
         parser.compile("%{PULPLOG}")
 
         unmatched = for_matching_lines(@log, parser) do |match|
-          notify(
+          export(
             'timestamp' => helpers.parse_syslog_date(match['timestamp'][0], year),
             'level' => helpers.level(match['level'][0]),
             'level_hr' => match['level'][0],
@@ -24,7 +24,7 @@ module GrokNGelf
 
         parser.compile("%{SYSLOG}")
         unmatched = for_matching_lines(unmatched, parser) do |match|
-          notify(
+          export(
             'timestamp' => helpers.parse_syslog_date(match['timestamp'][0], year),
             'program' => match['message'][0],
             'pid' => match['pid'][0],

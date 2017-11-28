@@ -10,7 +10,7 @@ module GrokNGelf
         year = File.ctime(log).year
 
         unmatched = for_matching_lines(log, parser) do |match|
-          notify(
+          export(
             'timestamp' => helpers.parse_syslog_date(match['timestamp'][0], year),
             'level' => helpers.level(:INFO),
             'level_hr' => 'INFO',

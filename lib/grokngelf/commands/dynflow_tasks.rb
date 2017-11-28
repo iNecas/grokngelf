@@ -19,7 +19,7 @@ module GrokNGelf
           puts "Task export was extracted to #{expanded}"
           self.log_dir = expanded
         end
-        GrokNGelf::Importers::DynflowTasks.new(notifier, host, import_id).import(self.log_dir)
+        GrokNGelf::Importers::DynflowTasks.new(exporter, host, import_id).import(self.log_dir)
         super
       end
     end

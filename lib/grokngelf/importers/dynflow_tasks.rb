@@ -83,11 +83,11 @@ module GrokNGelf
             'foreman_task_start_before' => row[12],
             'log_file' => @execution_plans_dump
           }
-          notify(data)
+          export(data)
           data['timestamp'] = DateTime.strptime(row[5], '%Y-%m-%d %H:%M:%S').to_time.to_i
           data['short_message'] = "Execution plan #{row[0]} ended"
           data['dynflow_event_type'] = 'end'
-          notify(data)
+          export(data)
           update_progress
         end
         puts '|'
@@ -127,11 +127,11 @@ module GrokNGelf
             'dynflow_progress_weight' => row[10],
             'log_file' => @steps_dump
           }
-          notify(data)
+          export(data)
           data['timestamp'] = DateTime.strptime(row[5], '%Y-%m-%d %H:%M:%S').to_time.to_i
           data['short_message'] = "Execution step ended"
           data['dynflow_event_type'] = 'end'
-          notify(data)
+          export(data)
           update_progress
         end
         puts '|'
